@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
+
 export default function LoginScreen() {
     const router = useRouter();
     const [username, setUsername] = useState("");
@@ -26,7 +26,7 @@ export default function LoginScreen() {
             setIsLoading(false);
         }
     };
-//Handle inputs in login 
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -38,6 +38,7 @@ export default function LoginScreen() {
                 <TextInput
                     style={styles.input}
                     placeholder="Username"
+                    placeholderTextColor="#aaa"
                     value={username}
                     onChangeText={setUsername}
                     autoCapitalize="none"
@@ -48,6 +49,7 @@ export default function LoginScreen() {
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
+                    placeholderTextColor="#aaa"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
@@ -72,45 +74,46 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#121212", 
     },
     innerContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
+        paddingHorizontal: 20,
     },
     title: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
-        marginBottom: 20,
-        color: "#333",
-    },
+        marginBottom: 30,
+        color: "#FFD700",     },
     input: {
         width: "100%",
         height: 50,
-        borderColor: "#ddd",
+        backgroundColor: "#2D2D2D",
+        borderColor: "#333",
         borderWidth: 1,
         borderRadius: 8,
         paddingHorizontal: 15,
-        marginBottom: 15,
-        backgroundColor: "#fff",
+        marginBottom: 20,
+        color: "#FFF",
         fontSize: 16,
     },
     button: {
         width: "100%",
-        backgroundColor: "#007bff",
+        backgroundColor: "#333",
         paddingVertical: 15,
         borderRadius: 8,
         alignItems: "center",
-        marginTop: 10,
+        borderWidth: 1,
+        borderColor: "#FFD700", 
     },
     disabledButton: {
-        backgroundColor: "#aaa",
+        backgroundColor: "#555",
     },
     buttonText: {
-        color: "#fff",
-        fontSize: 16,
+        color: "#FFD700", 
+        fontSize: 18,
         fontWeight: "bold",
     },
 });
