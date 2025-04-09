@@ -1,7 +1,7 @@
+
 import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
-
 export default function LoginScreen() {
     const router = useRouter();
     const [username, setUsername] = useState("");
@@ -26,7 +26,7 @@ export default function LoginScreen() {
             setIsLoading(false);
         }
     };
-
+//Handle inputs in login 
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
