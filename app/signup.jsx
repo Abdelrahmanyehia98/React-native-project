@@ -3,37 +3,48 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert, KeyboardAvo
 import { useRouter } from "expo-router";
 import { auth } from "../firebase";
 
-export default function LoginScreen() {
+export default function SignUpScreen() {
     const router = useRouter();
-    const [email, setEmail] = useState(""); 
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleLogin = async () => {
-        if (!email.trim() || !password.trim()) {
-            Alert.alert("Error", "Please enter both email and password");
+    const handleSignUp = async () => {
+        if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
+            Alert.alert("Error", "Please fill in all fields");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            Alert.alert("Error", "Passwords don't match");
+            return;
+        }
+
+        if (password.length < 6) {
+            Alert.alert("Error", "Password should be at least 6 characters");
             return;
         }
 
         setIsLoading(true);
-        try {
-            await auth.signInWithEmailAndPassword(email, password);
-            router.replace("/Home");
+         try {
+        console.log("Attempting to create user with:", email);
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        console.log("User created successfully:", userCredential.user);
+        
+        router.replace("/Home");
         } catch (error) {
-            let errorMessage = "Failed to login. Please try again.";
+            let errorMessage = "Failed to sign up. Please try again.";
             
             switch (error.code) {
+                case 'auth/email-already-in-use':
+                    errorMessage = "This email is already in use";
+                    break;
                 case 'auth/invalid-email':
                     errorMessage = "Please enter a valid email address";
                     break;
-                case 'auth/user-disabled':
-                    errorMessage = "This account has been disabled";
-                    break;
-                case 'auth/user-not-found':
-                    errorMessage = "No account found with this email";
-                    break;
-                case 'auth/wrong-password':
-                    errorMessage = "Incorrect password";
+                case 'auth/weak-password':
+                    errorMessage = "Password should be at least 6 characters";
                     break;
                 default:
                     errorMessage = error.message;
@@ -51,11 +62,11 @@ export default function LoginScreen() {
             style={styles.container}
         >
             <View style={styles.innerContainer}>
-                <Text style={styles.title}>Login</Text>
+                <Text style={styles.title}>Sign Up</Text>
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Email" 
+                    placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
                     autoCapitalize="none"
@@ -73,22 +84,31 @@ export default function LoginScreen() {
                     accessibilityLabel="Password input"
                 />
 
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                    accessibilityLabel="Confirm password input"
+                />
+
                 <TouchableOpacity
                     style={[styles.button, isLoading && styles.disabledButton]}
-                    onPress={handleLogin}
+                    onPress={handleSignUp}
                     disabled={isLoading}
                     accessibilityRole="button"
                 >
                     <Text style={styles.buttonText}>
-                        {isLoading ? "Logging in..." : "Login"}
+                        {isLoading ? "Creating account..." : "Sign Up"}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
-                    style={styles.signUpLink} 
-                    onPress={() => router.push("/signup")}
+                    style={styles.loginLink} 
+                    onPress={() => router.push("/login")}
                 >
-                    <Text style={styles.signUpText}>Don't have an account? Sign up</Text>
+                    <Text style={styles.loginText}>Already have an account? Login</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -110,7 +130,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: "bold",
         marginBottom: 30,
-        color: "#FFD700",     },
+        color: "#FFD700"},
     input: {
         width: "100%",
         height: 50,
@@ -140,10 +160,10 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
     },
-    signUpLink: {
+    loginLink: {
         marginTop: 20,
     },
-    signUpText: {
+    loginText: {
         color: "#007bff",
         fontSize: 14,
     },

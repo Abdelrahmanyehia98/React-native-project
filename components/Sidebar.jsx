@@ -12,7 +12,6 @@ export default function Sidebar() {
     { name: "Home", path: "/Home" },
     { name: "About", path: "/About" },
     { name: "Scroll View", path: "/scroll-view" },
-    { name: "Flat List", path: "/flat-list" },
   ];
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export default function Sidebar() {
           </TouchableOpacity>
         </View>
 
-        {/* Navigation Items */}
+        
         {routes.map((route, index) => (
           <TouchableOpacity
             key={index}

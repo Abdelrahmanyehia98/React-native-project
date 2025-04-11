@@ -76,7 +76,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       {/* Header */}
       <Sidebar />
-      <View style={styles.header}>
+       <View style={styles.header}>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     top: 50,
-    left: 30,
+    left:30,
     backgroundColor: "#2D2D2D",
     borderRadius: 8,
     marginHorizontal: 5,
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   cartButton: {
     padding: 8,
     position: "relative",
-    top: 13,
+    top:13,
   },
   cartBadge: {
     position: "absolute",
