@@ -32,18 +32,21 @@ export default function About() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, flexDirection: "row" },
+  container: { flex: 1, flexDirection: "row",backgroundColor: "#121212", },
   content: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   text: {
     fontSize: 24,
     fontWeight: 'bold',
+    color:"white",
   },
   team: {
     fontSize: 18,
     marginBottom: 5,
+    color:"white",
   },
   member: {
     fontSize: 18,
+    color:"white",
   },
   teamMembers: {
     marginTop: 20,
@@ -56,10 +59,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 5,
+    color:"white",
   },
   bullet: {
     fontSize: 20,
     marginRight: 5,
     marginTop: -3,
+    color:"white",
   },
 });
