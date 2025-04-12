@@ -37,7 +37,6 @@ export default function Sidebar() {
         <MaterialIcons name="menu" size={28} color="#FFD700" />
       </TouchableOpacity>
 
-      {/* Overlay */}
       {isOpen && (
         <TouchableOpacity
           style={styles.overlay}
